@@ -1,1 +1,20 @@
 
+kind: CronJob
+apiVersion: batch/v1beta1
+metadata:
+  name: batch-job-every-minute
+spec: 
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: periodic-batch-job
+        spec:
+         containers:
+         - name: main
+           image: docker/whalesay
+           command: ["cowsay", "This is cronjob!"]
+         restartPolicy: OnFailure
+
